@@ -32,8 +32,7 @@ export function RoomOptions() {
     <div className="mood-presets">{(['clear','rain','storm'] as const).map(w=><button key={w} aria-pressed={p.weather===w} onClick={()=>p.change('weather',w)}>{w==='clear'?'Dry night':w==='rain'?'Rain':'Distant storm'}</button>)}</div>
     <h3>Sound in the house</h3>
     {([
-      ['master','Master'],['tvVolume','TV'],['musicVolume','Records'],['cassetteVolume','Cassette'],['weatherVolume','Rain & thunder'],
-      ['hum','Appliance hum'],['clock','Clock ticking'],['pipes','Pipes settling'],['upstairs','Upstairs activity'],
+      ['master','Master'],['tvVolume','TV'],['musicVolume','Records & iPod'],['cassetteVolume','Cassette'],
     ] as const).map(([key,label])=><Range key={key} label={label} value={p[key]} onChange={v=>p.change(key,v)} />)}
     <h3>Comfort</h3>
     <Range label="Room brightness" value={p.brightness} min={0.65} max={1.4} onChange={v=>p.change('brightness',v)} />

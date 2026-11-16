@@ -63,7 +63,7 @@ export default function App() {
       </Canvas>
 
       {createPortal(<div className="room-ui">
-      {arriving && <div className="arrival-caption"><span>Back in the Day</span><p>Come on down. Make yourself at home.</p><p>O - sound, weather &amp; room settings</p><button onClick={() => useStore.getState().finishArrival()}>Skip entrance</button></div>}
+      {/* No title card: you just walk down the stairs into the room. */}
       {playingGame && <div className="game-help">WASD / arrows play · Space restarts · Esc puts the controller down<button onClick={() => useStore.getState().stopGame()}>Put controller down</button></div>}
       {!menuOpen && <TVRemote />}
       {!menuOpen && <ExtraDevicePanels />}
