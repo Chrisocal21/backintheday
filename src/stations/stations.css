@@ -1,0 +1,50 @@
+.st-backdrop { position: fixed; inset: 0; z-index: 60; display: grid; place-items: center; background: #0b0806c4; padding: 16px; box-sizing: border-box; font-family: system-ui, sans-serif; }
+.st-device { position: relative; display: flex; flex-direction:column; gap: 12px; padding: 22px; border-radius: 16px; width: min(760px, 100%); max-height: 100%; overflow: auto; box-sizing: border-box; box-shadow: 0 24px 70px #000b; }
+.st-brand { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; font: 900 20px/1 Impact, 'Arial Black', sans-serif; letter-spacing: 2px; }
+.st-brand small { font: 12px system-ui, sans-serif; letter-spacing: 0; opacity: .7; }
+.st-screen { height:clamp(220px,44vh,490px); flex-shrink:0; width: 100%; max-width: 560px; align-self: center; overflow: hidden; border-radius: 6px; background: #000; box-sizing:border-box; }
+.st-canvas { width: 100%; height: 100%; display: block; image-rendering: pixelated; outline: none; cursor: crosshair; }
+.st-menu { list-style: none; margin: 0; padding: 6% 8%; height: 100%; box-sizing: border-box; display: flex; flex-direction: column; gap: 2px; font: bold 14px monospace; overflow-y: auto; }
+.st-menu-head { font-size: 13px; letter-spacing: 4px; margin-bottom: 8px; }
+.st-menu-foot { margin-top: auto; font-size: 11px; letter-spacing: 1px; }
+.st-menu button { width: 100%; display: flex; justify-content: space-between; gap: 10px; font: inherit; background: transparent; border: 0; padding: 8px 10px; cursor: pointer; text-align: left; white-space: pre; border-radius: 3px; }
+.st-menu button em { font-style: normal; font-size: 11px; opacity: .75; align-self: center; }
+.st-info { font-size: 14px; line-height: 1.45; }
+.st-info p { margin: 4px 0; }
+.st-genre { font-size: 11px; padding: 2px 6px; border-radius: 4px; background: #0003; margin-left: 6px; }
+.st-controls { font-size: 13px; opacity: .85; }
+.st-leave { justify-self: end; font: 13px system-ui, sans-serif; padding: 8px 14px; border-radius: 8px; border: 1px solid #0004; cursor: pointer; background: #0002; color: inherit; }
+
+/* Per-device bezels */
+.st-arcade { background: linear-gradient(#2a1d3a, #120c1c); color: #f8d798; border: 4px solid #ed7596; }
+.st-arcade .st-brand span { color: #f8d798; text-shadow: 0 0 10px #ed7596; font-style: italic; }
+.st-arcade .st-screen { border: 10px solid #000; box-shadow: 0 0 30px #6a5ad366 inset; }
+.st-console { background: repeating-linear-gradient(90deg, #6b4423 0 6px, #7a5030 6px 9px, #5e3b1e 9px 15px); color: #f0e6c8; border-top: 18px solid #1a1a1a; }
+.st-console .st-brand span { background: #1a1a1a; padding: 4px 10px; color: #f2a03a; }
+.st-console .st-info, .st-console .st-leave { background: #1a1a1acc; padding: 8px 10px; border-radius: 6px; }
+.st-handheld { width: min(460px, 100%); background: #c6c3bb; color: #2a2a3a; border-radius: 18px 18px 60px 18px; }
+.st-handheld .st-brand span { color: #2a2a6a; font-style: italic; }
+.st-handheld .st-screen { border: 22px solid #5a5a6a; border-radius: 8px 8px 30px 8px; }
+.st-computer { background: #e2dccb; color: #2a2a2a; border: 2px solid #b8b09a; border-radius: 8px; }
+.st-computer .st-brand { background: linear-gradient(90deg, #0a246a, #3a6ea5); color: #fff; padding: 6px 10px; border-radius: 3px; font: bold 14px Tahoma, sans-serif; letter-spacing: 0; }
+.st-computer .st-screen { border: 16px solid #cfc8b4; border-radius: 4px; }
+.st-backdrop { pointer-events:auto;z-index:100; }
+.st-discovery { display:grid;grid-template-columns:1fr 180px;gap:10px;font:12px monospace; }
+.st-discovery label { display:grid;gap:5px; }
+.st-discovery input,.st-discovery select { min-width:0;width:100%;box-sizing:border-box;padding:9px;border:1px solid #9a907d;border-radius:4px;background:#eee6ce;color:#252923;font:13px monospace; }
+.st-tabs { grid-column:1/-1;display:flex;gap:6px;flex-wrap:wrap; }
+.st-tabs button { padding:7px 10px;border:1px solid #9995;border-radius:4px;background:#0003;color:inherit;cursor:pointer;font:12px monospace; }
+.st-tabs button[aria-pressed="true"] { background:#e1ce9e;color:#242319; }
+.st-row { display:flex;gap:5px; }
+.st-row>button:first-child { flex:1;min-width:0;white-space:normal; }
+.st-row .st-star { width:32px;flex:none;align-items:center;justify-content:center;padding:5px;color:#e0c68c;font-size:20px; }
+.st-empty { padding:20px 0;line-height:1.6; }
+.st-info small { opacity:.7;font:10px/1.5 monospace; }
+.st-disc { background:linear-gradient(145deg,#343e4b,#181f2b);border:2px solid #728394;color:#e1e7e2;border-radius:22px; }
+.st-disc .st-brand { color:#acccd4; }
+.st-disc .st-screen { border:12px solid #101722;box-shadow:0 0 0 1px #697b89; }
+.st-game-actions { display:flex;justify-content:center;gap:8px;margin-top:8px; }
+.st-player { height:100%;display:flex;flex-direction:column; }
+.st-player .st-canvas { height:calc(100% - 40px);min-height:0;object-fit:contain; }
+.st-game-actions button { padding:7px 12px;border:1px solid #a7976d;color:#eee1c0;background:#27251e;border-radius:4px;cursor:pointer; }
+@media(max-width:600px){.st-discovery{grid-template-columns:1fr}.st-menu{padding:4%;font-size:12px}.st-brand{flex-direction:column}.st-menu button em{display:none}}

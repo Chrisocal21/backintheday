@@ -1,0 +1,77 @@
+.entry-actions { display: flex; gap: 12px; margin-top: 32px; flex-wrap: wrap; justify-content: center; }
+.entry-actions button, .hangout-dock button { font: inherit; cursor: pointer; color: #f4e9d8; border: 1px solid #bfa77a66; background: #31281ee8; border-radius: 8px; padding: 12px 18px; }
+.entry-actions button:first-child { background: #e4bd83; color: #241c14; }
+.entry-actions button:hover, .hangout-dock button:hover { background: #63503b; color: #fff4df; }
+.entry-actions button:focus-visible, .hangout-dock button:focus-visible { outline: 2px solid #f4d39d; outline-offset: 4px; }
+.hangout-dock { position: fixed; bottom: 28px; left: 28px; max-width: min(360px, calc(100vw - 56px)); box-sizing: border-box; padding: 22px; color: #f4e9d8; background: linear-gradient(145deg, #261e17ed, #161511eb); border: 1px solid #c4a47640; border-radius: 14px; box-shadow: 0 12px 40px #0005; font-family: Georgia, serif; }
+.hangout-eyebrow { font: 10px/1.5 monospace; letter-spacing: 2px; color: #c5ad87; }
+.hangout-heading { margin-top: 8px; font-size: 28px; }
+.hangout-dock p { font: 12px/1.6 system-ui, sans-serif; color: #c7bbaa; margin: 8px 0 18px; }
+.hangout-actions { display: flex; gap: 8px; }
+.hangout-actions button { font: 13px system-ui, sans-serif; padding: 10px 12px; }
+.hangout-actions button:first-child { background: #dfbd88; color: #241c14; }
+.hangout-actions span { display: block; font-size: 10px; opacity: .7; margin-top: 4px; }
+.hangout-channels { display: flex; align-items: center; gap: 8px; margin-top: 18px; font: 11px system-ui, sans-serif; color: #c7bbaa; }
+.hangout-channels button { padding: 5px 10px; }
+.hangout-channels .hangout-hide { margin-left: auto; padding: 5px 0; border: none; background: transparent; color: #c7bbaa; font-size: 10px; }
+.hangout-dock:has(.hangout-reveal) { padding: 0; background: transparent; border: none; box-shadow: none; }
+.hangout-reveal { font-size: 12px !important; opacity: .7; }
+.hangout-light { display: block; margin-top: 18px; font: 12px system-ui, sans-serif; color: #dac8ad; }
+.hangout-light span { float: right; color: #c5ad87; }
+.hangout-light input { display: block; width: 100%; margin: 12px 0 0; accent-color: #dfbd88; cursor: pointer; }
+.walking-status { position: fixed; top: 18px; left: 50%; transform: translateX(-50%); padding: 10px 16px; border-radius: 8px; background: #18130fd9; color: #eadac3; font: 12px system-ui, sans-serif; pointer-events: none; white-space: nowrap; }
+#room-canvas { outline: none; }
+.entry-mood { font: 10px monospace; letter-spacing: 3px; color: #dbb77d; margin-top: 22px; }
+.mood-presets { display: flex; gap: 6px; margin-top: 18px; }
+.mood-presets button { flex: 1; padding: 8px 5px; font: 11px system-ui, sans-serif; border-color: #a7885555; }
+.lighting-controls { margin-top: 18px; border-top: 1px solid #bfa77a26; }
+.lighting-controls .hangout-light { margin-top: 12px; }
+.hangout-dock { max-height: calc(100vh - 56px); overflow-y: auto; }
+.room-mood-button { position: fixed; bottom: 24px; right: 24px; border: 1px solid #bfa77a66; border-radius: 8px; background: #261e17e8; color: #f4e9d8; padding: 10px 16px; font: 12px system-ui, sans-serif; cursor: pointer; }
+.room-ui { position: fixed; inset: 0; z-index: 2147483647; pointer-events: none; isolation: isolate; }
+.room-ui button, .room-ui input, .room-ui .hangout-dock, .room-ui [style*="rgba(20"] { pointer-events: auto; }
+.room-remote { pointer-events: auto; position: absolute; bottom: 24px; right: 24px; width: min(330px, calc(100vw - 48px)); box-sizing: border-box; max-height: calc(100vh - 80px); overflow-y: auto; padding: 20px; color: #f5e8d3; background: #1b1713f5; border: 1px solid #c8a36c; border-radius: 14px; box-shadow: 0 8px 32px #0008; font: 12px system-ui, sans-serif; z-index: 2; }
+.remote-label { font-size: 10px; letter-spacing: 2px; color: #c9ad85; }
+.remote-station { margin: 12px 0; padding: 12px; background: #0c1510; color: #c6e8af; border-radius: 6px; font: 21px monospace; }
+.room-remote button { cursor: pointer; background: #3b3024; border: 1px solid #8e7452; border-radius: 6px; padding: 10px 8px; color: #fff0d6; font: 12px system-ui, sans-serif; }
+.room-remote button:hover { background: #6a5034; }
+.room-remote button:focus-visible { outline: 2px solid #ffe1a3; outline-offset: 2px; }
+.remote-channel-buttons, .remote-tools { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.remote-channel-buttons button { background: #e0bd82; color: #221a11; font-weight: 600; }
+.remote-eras { display: flex; gap: 6px; margin: 10px 0 16px; }
+.remote-eras button { flex: 1; }
+.remote-eras button[aria-pressed="true"] { color: #fff4d8; background: #72502e; border-color: #e0bd82; }
+.room-remote p { font-size: 11px; color: #c5b49c; margin: 14px 0 0; line-height: 1.5; }
+.room-ui .room-mood-button { display: none; }
+.device-done { width: 100%; margin-top: 16px; }
+.device-section { padding: 12px 0; border-top: 1px solid #bfa77a33; margin-top: 12px; }
+.setting-range { display:block; margin:14px 0; color:#d6c5aa; font:12px system-ui,sans-serif; }
+.setting-range span { float:right; }
+.setting-range input { width:100%;display:block;margin-top:9px;accent-color:#dfbd88;cursor:pointer; }
+.setting-toggle { display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px 0;border-bottom:1px solid #bfa77a22;font:12px system-ui,sans-serif; }
+.setting-toggle input { accent-color:#dfbd88; }
+.settings-panel h3 { font:18px Georgia,serif; margin:22px 0 10px; }
+.settings-panel { width:min(360px,calc(100vw - 48px)); }
+.image-upload { display:block;margin:18px 0;font:12px system-ui,sans-serif; }
+.image-upload input { display:block;width:100%;margin-top:8px; }
+.favorite-list { margin:12px 0; }
+.favorite-list>div { display:flex;gap:4px;margin-top:4px; }
+.favorite-list>div button:first-child { flex:1;text-align:left; }
+.carried-media { position:fixed;left:24px;bottom:70px;max-width:330px;padding:14px;background:#221c16ed;border:1px solid #bc9e6c66;border-radius:8px;color:#ebd9b6;font:13px system-ui,sans-serif;pointer-events:auto; }
+.carried-media small { display:block;margin:8px 0;font-size:11px;line-height:1.5; }
+.carried-media button { background:#58442e;color:#f0dfbd;border:1px solid #9b7d51;padding:6px 10px;cursor:pointer;border-radius:4px; }
+.youtube-surface iframe { width:100%!important;height:100%!important;border:0;pointer-events:none; }
+.favorite-name { display:block;font:11px system-ui,sans-serif;color:#c9b99d;margin:12px 0; }
+.favorite-name input { display:block;width:100%;box-sizing:border-box;margin-top:6px;padding:8px;background:#15120e;color:#ead8b6;border:1px solid #836d4c;border-radius:5px; }
+.arrival-caption { position: fixed; bottom: 10%; left: 50%; transform: translateX(-50%); text-align: center; color: #fff1d8; text-shadow: 0 2px 12px #000; }
+.arrival-caption span { font: 32px Georgia, serif; }
+.arrival-caption p { font: 14px system-ui, sans-serif; }
+.arrival-caption button { pointer-events: auto; border: 1px solid #c9ad8566; padding: 8px 14px; border-radius: 6px; background: #221a14bd; color: #eadac3; cursor: pointer; }
+.media-shelf { border-top: 1px solid #a7885544; margin-top: 16px; }
+.media-shelf h3 { font: 18px Georgia, serif; margin: 18px 0 12px; }
+.media-title { margin-bottom: 14px; }
+.media-title button { display: block; width: 100%; text-align: left; }
+.media-title small { display: block; font-size: 10px; line-height: 1.5; color: #c9baa4; margin-top: 5px; }
+.media-title a { display: inline-block; margin-top: 6px; color: #edcc94; font-size: 10px; }
+.game-help { position: fixed; bottom: 18px; left: 50%; transform: translateX(-50%); color: #ecdabd; font: 12px system-ui, sans-serif; background: #18130fe8; padding: 12px; border-radius: 8px; }
+.game-help button { margin-left: 12px; padding: 8px; background: #e0bd82; border: 0; border-radius: 4px; cursor: pointer; }

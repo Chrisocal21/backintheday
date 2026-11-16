@@ -1,0 +1,1 @@
+{"functions":{"api/**/*.js":{"includeFiles":"src/media/catalog.json"}},"rewrites":[{"source":"/((?!api/|assets/).*)","destination":"/index.html"}]}
