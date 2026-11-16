@@ -26,7 +26,7 @@ export function startHouseAudio() {
   const timer=window.setInterval(()=>{
     if(c.state!=='running')return
     const p=usePreferences.getState(),t=c.currentTime;beat++
-    if(p.clock)tone(c,out,t,beat%2?1100:850,0.026,p.clock*0.015,'sine')
+    if(p.clock)burst(p.clock*0.05,beat%2?3200:2600,0.03) // soft mechanical tick, not a beep
     if(p.pipes && Math.random()<1/70)burst(p.pipes*0.018,500,0.45)
     if(p.upstairs && Math.random()<1/65)for(let i=0;i<5;i++)tone(c,out,t+i*0.55,47,0.2,p.upstairs*0.06,'sine')
     if(p.weather==='storm' && Math.random()<1/75)burst(p.weatherVolume*0.1,100,2)

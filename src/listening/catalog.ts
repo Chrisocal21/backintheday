@@ -1,6 +1,7 @@
 import { SPOKEN_TAPES } from './spoken'
-export type ListeningKind='record'|'tape'
-export type Track={id:string;title:string;creator:string;genre:string;era:string;format:ListeningKind;url:string;source:string;license:string;licenseUrl:string;verified:string;duration?:number;note:string}
+import harvest from './harvest.json' // node tools/harvest-free-media.mjs
+export type ListeningKind='record'|'tape'|'ipod' // ipod plays every music track (format 'record')
+export type Track={id:string;title:string;creator:string;genre:string;era:string;format:ListeningKind;url:string;source:string;license:string;licenseUrl:string;verified:string;duration?:number;note:string;album?:string;cover?:string;track?:number}
 const songs:[string,string,string][]=[
   ['Local Forecast','Lounge','90s'],['Airport Lounge','Lounge','70s'],['Bossa Antigua','Bossa nova','70s'],
   ['George Street Shuffle','Jazz','70s'],['Lobby Time','Lounge','90s'],['AcidJazz','Jazz','90s'],
@@ -16,4 +17,5 @@ export const LISTENING:Track[]=[
     note:'Modern recording selected for its era mood. Credit: '+title+' by Kevin MacLeod (incompetech.com), licensed CC BY 4.0. Unmodified recording.',
   })),
   ...SPOKEN_TAPES,
+  ...(harvest as Track[]),
 ]

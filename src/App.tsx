@@ -22,6 +22,15 @@ import { CassetteDeck, PersonalPrints } from './scene/RetroLife'
 import { MediaRitual } from './scene/MediaRitual'
 import { ConsoleControls, ExtraDevicePanels, TVControls } from './ui/RoomSettings'
 import { usePreferences } from './preferences'
+import { GuideKey } from './media/GuideKey'
+import { TVRemote } from './media/TVRemote'
+import { IPod } from './listening/IPod'
+import { IPodDock } from './scene/IPodDock'
+import { ProgramGuide } from './media/ProgramGuide'
+import { TVPlayback, WatchTheater } from './media/Playback'
+import { openMediaHub, playMedia } from './media/state'
+import { resolveLink } from './media/links'
+import { BUNDLED_MEDIA } from './media/catalog'
 
 export default function App() {
   const locked = useStore((s) => s.locked)
@@ -46,6 +55,7 @@ export default function App() {
         <Arrival />
         <GameCloset />
         <Stations />
+        <IPodDock />
         <GameSeat />
         <SeatedFocus />
         <HouseLife /><CassetteDeck /><PersonalPrints /><MediaRitual />
@@ -55,13 +65,18 @@ export default function App() {
       {createPortal(<div className="room-ui">
       {arriving && <div className="arrival-caption"><span>Back in the Day</span><p>Come on down. Make yourself at home.</p><p>O - sound, weather &amp; room settings</p><button onClick={() => useStore.getState().finishArrival()}>Skip entrance</button></div>}
       {playingGame && <div className="game-help">WASD / arrows play · Space restarts · Esc puts the controller down<button onClick={() => useStore.getState().stopGame()}>Put controller down</button></div>}
-      {!menuOpen && electronics === 'tv' && <RoomControlPanel />}
+      {!menuOpen && <TVRemote />}
       {!menuOpen && <ExtraDevicePanels />}
       {!menuOpen && electronics==='media' && <aside className="room-remote" aria-label="Tape and cartridge shelf"><div className="remote-label">PICK SOMETHING FOR TONIGHT</div><MediaShelf /><button className="device-done" onClick={()=>useStore.getState().setElectronics(null)}>Done</button></aside>}
       {heldMedia && !electronics && <div className="carried-media">Holding {heldMedia.title}<small>{heldMedia.kind==='tape'?'Look at the VCR under the TV, then E to insert.':'Look at the console beside the TV, then E to insert.'}</small><button onClick={()=>useStore.setState({heldMedia:null})}>Put back</button></div>}
       {!menuOpen && electronics === 'lights' && <aside className="room-remote" aria-label="Lamp controls"><div className="remote-label">ROOM LIGHTING</div><LightingControls /><button className="device-done" onClick={() => useStore.getState().setElectronics(null)}>Done</button></aside>}
       <Tabletop />
       <StationScreen />
+      <GuideKey />
+      <IPod />
+      <TVPlayback />
+      <WatchTheater />
+      <ProgramGuide />
       {menuOpen ? <InputMenu /> : <>
         {locked && !arriving && !hideHints && !electronics && <div style={styles.crosshair} />}
         {hint && !arriving && !hideHints && !electronics && <div style={styles.hint}>{hint}</div>}
@@ -108,17 +123,18 @@ function MediaShelf() {
   const filmId = useStore(s => s.filmId)
   const tape=useStore(s=>s.insertedTape),cartridge=useStore(s=>s.insertedCartridge)
   return <div className="media-shelf">
+    <button className="guide-button" onClick={openMediaHub}>📺 Program guide · {BUNDLED_MEDIA.length} movies, shows & cartoons</button>
     <h3>TV & movie shelf</h3>
     {tape&&<button onClick={()=>useStore.setState({insertedTape:null,filmId:null,mediaPaused:false})}>Eject tape</button>}
     {noSignal && <p>This stream is unavailable. Try another title or its source below.</p>}
     {FILMS.map(f => <div className="media-title" key={f.id}>
-      <button aria-pressed={filmId === f.id} onClick={() => useStore.getState().pickMedia('tape',f.id,f.title)}>{f.title}<small>Take tape - {f.year} · {f.category}</small></button>
+      <button aria-pressed={filmId === f.id} onClick={() => useStore.getState().pickMedia('tape',f.id,f.title)}>{f.title}<small>Watch now - {f.year} · {f.category}</small></button>
       <a href={f.source} target="_blank" rel="noreferrer">Source & credits</a><small>{f.credit}</small>
     </div>)}
     <h3>Game cartridges</h3>
     <ConsoleControls />
     {cartridge&&<div className="remote-tools"><button onClick={()=>useStore.getState().playGame(cartridge)}>Play inserted game</button><button onClick={()=>useStore.setState({insertedCartridge:null,playingGame:false,input:'tv'})}>Eject cartridge</button></div>}
-    {GAMES.map(g => <div className="media-title" key={g.id}><button onClick={() => useStore.getState().pickMedia('cartridge',g.id,g.title)}>{g.title}<small>Take cartridge - {g.help}</small></button><small>Original game · Free to play here</small></div>)}
+    {GAMES.map(g => <div className="media-title" key={g.id}><button onClick={() => useStore.getState().pickMedia('cartridge',g.id,g.title)}>{g.title}<small>Play now - {g.help}</small></button><small>Original game · Free to play here</small></div>)}
   </div>
 }
 
@@ -166,11 +182,12 @@ function InputMenu() {
     return () => window.removeEventListener('keydown', onKey)
   }, [closeMenu])
 
-  const submit = () => {
+  // Any supported link: YouTube, Vimeo, Dailymotion, Twitch, archive.org, or a direct video/audio file.
+  const submit = async () => {
     const id = parseYouTubeId(link)
-    if (!id) return setErr("That doesn't look like a YouTube link.")
-    playCustom(id)
-    closeMenu()
+    if (id && /youtu|^[\w-]{11}$/.test(link.trim())) { playCustom(id); closeMenu(); return }
+    try { const item = await resolveLink(link); closeMenu(); playMedia(item) }
+    catch (e) { setErr((e as Error).message) }
   }
 
   return (

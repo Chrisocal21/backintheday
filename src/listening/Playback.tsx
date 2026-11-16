@@ -14,7 +14,7 @@ export function seekListening(kind:ListeningKind,time:number) {
 function Player({kind}:{kind:ListeningKind}) {
   const ref=useRef<HTMLAudioElement>(null),id=useListening(s=>s[kind]?.id),playing=useListening(s=>s[kind]?.playing)
   const request=useListening(s=>s[kind]?.request)
-  const master=usePreferences(s=>s.master),level=usePreferences(s=>kind==='record'?s.musicVolume:s.cassetteVolume)
+  const master=usePreferences(s=>s.master),level=usePreferences(s=>kind==='tape'?s.cassetteVolume:s.musicVolume)
   const track=LISTENING.find(t=>t.id===id)
   useEffect(()=>{if(ref.current)players[kind]=ref.current;return()=>{delete players[kind]}},[kind])
   useEffect(()=>{if(ref.current)ref.current.volume=Math.max(0,Math.min(1,master*level*(kind==='record'?distance:1)))},[master,level,kind,id])
@@ -29,4 +29,4 @@ function Player({kind}:{kind:ListeningKind}) {
   },[id,playing,request,kind])
   return <audio ref={ref} src={track?.url} preload="metadata" onLoadedMetadata={()=>{const d=ref.current?.duration;if(d&&Number.isFinite(d))useListening.getState().update(kind,{duration:d})}} onTimeUpdate={()=>useListening.getState().update(kind,{time:ref.current?.currentTime??0})} onEnded={()=>useListening.getState().next(kind,1,true)} onError={()=>{if(id)useListening.getState().update(kind,{playing:false,error:'This source could not be loaded. Try another title or open its source link.'})}} />
 }
-export function ListeningPlayback(){return <><Player kind="record" /><Player kind="tape" /></>}
+export function ListeningPlayback(){return <><Player kind="record" /><Player kind="tape" /><Player kind="ipod" /></>}

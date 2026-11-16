@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { STATIONS, type Cart } from './catalog'
 import { closeStation, useStation } from './state'
+import { leaveFullscreen, makePush, tryFullscreen, wheelAmount } from '../takeover'
 import { H, W, text, type Game } from './engine'
 import { makeKeys } from './games'
 import { useLibraryShelf } from '../libraryShelf'
@@ -40,11 +41,26 @@ function Device({id}:{id:keyof typeof STATIONS}) {
     }
     window.addEventListener('keydown',onKey,true);return()=>window.removeEventListener('keydown',onKey,true)
   },[playing,index,query,genre,view,filtered.map(g=>g.id).join(',')])
+  // Scroll wheel: keep scrolling in → this device's screen takes over the window; scroll out → back.
+  const big=useStation(s=>s.big)
+  useEffect(()=>{
+    const pushIn=makePush(180),pushOut=makePush(180)
+    const wheel=(e:WheelEvent)=>{
+      // Over the game list: scroll the list first; once it's at the top, scrolling in takes over.
+      const list=(e.target as Element|null)?.closest?.('.st-menu') as HTMLElement|null
+      if(!useStation.getState().big&&list&&(e.deltaY>0||list.scrollTop>0))return
+      const a=wheelAmount(e),isBig=useStation.getState().big
+      if(!isBig&&pushIn(a,'in')){e.preventDefault();useStation.setState({big:true});tryFullscreen()}
+      else if(isBig){e.preventDefault();if(pushOut(a,'out')){useStation.setState({big:false});leaveFullscreen()}}
+    }
+    window.addEventListener('wheel',wheel,{passive:false});return()=>window.removeEventListener('wheel',wheel)
+  },[])
   const saveBest=(game:Cart,score:number)=>{
     const k=`${id}:${game.id}`;if(!Number.isFinite(score)||score<=(best[k]??0))return
     const next={...best,[k]:score};setBest(next);try{localStorage.setItem('bitd-best',JSON.stringify(next))}catch{}
   }
-  return <div className="st-backdrop"><div className={`st-device ${st.frame}`}>
+  return <div className={`st-backdrop${big?' st-big':''}`}><div className={`st-device ${st.frame}`}>
+    {big&&<button className="st-shrink" onClick={()=>{useStation.setState({big:false});leaveFullscreen()}}>Exit full screen (scroll out)</button>}
     <div className="st-brand"><span>{st.name}</span><small>{st.kind} / {st.era}</small></div>
     {!playing&&<div className="st-discovery">
       <label>Find a game<input type="search" value={query} onChange={e=>setQuery(e.target.value)} placeholder="Title, genre or description" /></label>

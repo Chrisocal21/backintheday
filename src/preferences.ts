@@ -13,7 +13,7 @@ export type Preferences = {
 }
 export const DEFAULT_PREFERENCES: Preferences = {
   master: 0.7, tvVolume: 0.5, musicVolume: 0.65, cassetteVolume:0.4,
-  hum: 0.15, clock: 0.12, pipes: 0.18, upstairs: 0.2, weatherVolume: 0.3,
+  hum: 0.04, clock: 0, pipes: 0.18, upstairs: 0.2, weatherVolume: 0.3,
   weather: 'clear', tvPower: true, computerPower: true, consolePower: true, cassettePlaying: false,
   leftLamp: true, nookLamp: true, hideHints: false, reducedMotion: false, brightness: 1, rememberSeat: true,
   posterStyle: 'original', photoData: '', posterData: '', favorites: [],
@@ -23,7 +23,9 @@ export const usePreferences = create<Settings>()(persist((set)=>({
   ...DEFAULT_PREFERENCES,
   change: (key,value)=>set({[key]:value}),
   reset: ()=>set({...DEFAULT_PREFERENCES}),
-}),{name:'back-in-the-day-preferences',version:1}))
+}),{name:'back-in-the-day-preferences',version:2,
+  // v2: the clock "tick" was a beep and the hum a constant buzz on entry. Reset both for everyone.
+  migrate:(saved,version)=>{const s=(saved??{}) as Partial<Preferences>;if(version<2){s.clock=0;s.hum=0.04};return s as Settings}}))
 
 // Keep session state (pointer lock, open panels, playback) out of saved settings.
 export const ROOM_SAVE_KEY='back-in-the-day-room'

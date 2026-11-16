@@ -38,10 +38,7 @@ export function Remote() {
         if (aimedAt(camera, TV_POS)) { s.setElectronics('tv'); return }
         if (s.holdingRemote ? nearTable(camera) : canReach(camera)) s.toggleRemote()
       }
-      if (!s.holdingRemote && s.electronics !== 'tv') return
-      if (e.code === 'BracketRight' || e.code === 'PageUp') s.channelStep(1)
-      if (e.code === 'BracketLeft' || e.code === 'PageDown') s.channelStep(-1)
-      if (e.code === 'KeyI') s.openMenu()
+      // Channel / volume / guide / power keys live on the remote itself (src/media/TVRemote.tsx).
     }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
@@ -57,7 +54,7 @@ export function Remote() {
       g.quaternion.copy(camera.quaternion)
       g.rotateX(0.5)
       g.rotateY(-0.15)
-      s.setHint('remote', nearTable(camera) ? 'E  put remote down   ·   [ ]  channel   ·   I  input' : 'E  remote controls   ·   [ ]  channel   ·   I  input')
+      s.setHint('remote', nearTable(camera) ? 'E  put remote down' : null)
     } else {
       g.position.copy(REMOTE_TABLE_POS)
       g.rotation.set(0, 0.4, 0)

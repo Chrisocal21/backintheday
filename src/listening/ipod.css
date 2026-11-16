@@ -1,0 +1,31 @@
+.ipod-backdrop { position: fixed; inset: 0; z-index: 70; display: grid; place-items: center; background: #050403b0; }
+.ipod { width: 290px; padding: 22px 22px 18px; border-radius: 30px; background: linear-gradient(160deg, #ffffff, #e4e6ea); box-shadow: 0 30px 80px #000c, inset 0 0 0 1px #fff, inset 0 -6px 12px #0001; display: flex; flex-direction: column; align-items: center; gap: 20px; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+.ipod-screen { width: 100%; height: 200px; border-radius: 6px; background: #f6f8fb; box-shadow: inset 0 0 0 2px #8d939c, inset 0 2px 8px #0003; overflow: hidden; display: flex; flex-direction: column; color: #111; }
+.ipod-bar { flex: none; display: flex; justify-content: space-between; padding: 3px 8px; font: 700 12px 'Helvetica Neue', Arial, sans-serif; background: linear-gradient(#fdfdfd, #c9ced6); border-bottom: 1px solid #8d939c; }
+.ipod-list { list-style: none; margin: 0; padding: 0; overflow-y: auto; flex: 1; scrollbar-width: none; }
+.ipod-list::-webkit-scrollbar { display: none; }
+.ipod-list li { display: flex; align-items: center; gap: 6px; padding: 4px 8px; font-size: 13px; cursor: pointer; }
+.ipod-list li span { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ipod-list li small { color: #777; font-size: 10px; max-width: 90px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ipod-list li em { font-style: normal; font-weight: 700; color: #999; }
+.ipod-list li.on { background: linear-gradient(#5aa0f2, #2a6fd0); color: #fff; }
+.ipod-list li.on small, .ipod-list li.on em { color: #e8f0ff; }
+.ipod-now { flex: 1; display: grid; grid-template-columns: 64px 1fr; gap: 6px 10px; padding: 10px; align-content: start; font-size: 12px; }
+.ipod-now img { width: 64px; height: 64px; object-fit: cover; border-radius: 3px; box-shadow: 0 2px 6px #0004; }
+.ipod-now div { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.ipod-now b, .ipod-now span, .ipod-now small { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ipod-now small { color: #666; }
+.ipod-progress { grid-column: 1 / -1; height: 8px; border-radius: 4px; background: #d4d8de; box-shadow: inset 0 1px 2px #0003; overflow: hidden; margin-top: 8px; }
+.ipod-progress i { display: block; height: 100%; background: linear-gradient(#7fb6f7, #2a6fd0); }
+.ipod-times { grid-column: 1 / -1; display: flex; justify-content: space-between !important; flex-direction: row !important; font-size: 10px; color: #555; }
+.ipod-err { grid-column: 1 / -1; color: #b3261e !important; white-space: normal !important; }
+.ipod-empty { flex: 1; display: grid; place-items: center; text-align: center; font-size: 13px; color: #555; }
+.ipod-wheel { position: relative; width: 190px; height: 190px; border-radius: 50%; background: linear-gradient(160deg, #fafbfc, #dfe2e6); box-shadow: inset 0 0 0 1px #c9cdd3, 0 1px 0 #fff; }
+.ipod-wheel button { position: absolute; border: 0; background: none; cursor: pointer; color: #9aa0a8; font: 700 13px 'Helvetica Neue', Arial, sans-serif; }
+.w-menu { top: 14px; left: 50%; transform: translateX(-50%); letter-spacing: 1px; }
+.w-prev { left: 14px; top: 50%; transform: translateY(-50%); font-size: 16px !important; }
+.w-next { right: 14px; top: 50%; transform: translateY(-50%); font-size: 16px !important; }
+.w-play { bottom: 12px; left: 50%; transform: translateX(-50%); font-size: 16px !important; }
+.w-center { left: 50%; top: 50%; width: 70px; height: 70px; transform: translate(-50%, -50%); border-radius: 50%; background: linear-gradient(#f2f3f5, #e1e4e8) !important; box-shadow: inset 0 0 0 1px #c9cdd3, 0 2px 4px #0002; }
+.w-center:active { box-shadow: inset 0 2px 6px #0003; }
+.ipod-help { font-size: 10px; color: #8a8f96; }

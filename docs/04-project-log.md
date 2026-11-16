@@ -1,5 +1,16 @@
 # Back in the Day - Project Log
 
+## 2026-11-15 - Bigger guide, no duplicates, scroll to full screen
+- Chris saw duplicate TV/movies. The same film came from Codex's seed, the VHS shelf and the harvest; now deduped by normalized title and URL.
+- Harvester expanded: sci-fi/horror, silent, comedy, classic TV commercials, newsreels, 80 per collection, plus 75 official music videos (73 passed the YouTube check). Guide: 667 titles. Audio: 99 tracks (90 old-time radio).
+- Scroll wheel all the way in now takes over the screen on the TV, the PC and every game device; scroll out to come back. Verified in Chrome.
+
+## 2026-11-15 - Free media harvester, no more tapes
+- Took over from Codex. Its TV "watch" system was half-finished: `src/media/Playback.tsx` imported a missing `media.css`, and the program guide, watch theater and TV playback host were never mounted, so the page failed to load. Added the stylesheet, built the Program Guide (tabs, search, one-click play), and mounted all three.
+- Chris didn't like carrying tapes to the VCR. Choosing a tape or cartridge now plays it immediately; sitting on any TV-facing seat shows "T  TV guide" and T opens the guide.
+- New `tools/harvest-free-media.mjs`: pulls Internet Archive items explicitly marked public domain or CC BY / BY-SA (NC/ND skipped unless flagged), with a family-friendly title filter. First run: 160 videos (40 each feature films, classic TV, cartoons, shorts) and 42 audio tracks (old-time radio, netlabel music) wired into the guide and record/tape libraries.
+- Everything streams; offline needs `--download` (many GB). Games are not harvested: web games rarely carry reuse licenses, so devices keep original games.
+
 ## 2026-11-15 - Wall dressing expansion
 - Added ten original retro wall prints with varied titles, sizes, and slight hanging angles, plus a 21-cassette rack, two shallow display shelves with books/frames, and a cork memory board with fictional illustrated snapshots/notes.
 - Concentrated additions on walls and above furniture to keep circulation clear. These additions are decorative; they do not claim new interaction behavior.

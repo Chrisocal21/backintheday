@@ -94,7 +94,13 @@ export const useStore = create<State>((set, get) => ({
   heldMedia: null,
   insertedTape: null,
   insertedCartridge: null,
-  pickMedia: (kind,id,title)=>{set({heldMedia:{kind,id,title},electronics:null});document.exitPointerLock()},
+  // No carrying tapes/cartridges to the VCR: choosing one puts it straight on the TV.
+  pickMedia: (kind,id)=>{
+    const prefs=usePreferences.getState()
+    prefs.change('tvPower',true)
+    if(kind==='tape'){set({heldMedia:null,insertedTape:id});get().playFilm(id)}
+    else{prefs.change('consolePower',true);set({heldMedia:null,insertedCartridge:id as GameId});get().playGame(id as GameId)}
+  },
   setSeatZoom: (v) => set({ seatZoom: Math.max(0, Math.min(1, v)) }),
 
   setLocked: (locked) => set({ locked }),

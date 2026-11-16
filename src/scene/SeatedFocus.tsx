@@ -4,6 +4,9 @@ import { MathUtils, PerspectiveCamera, Vector3 } from 'three'
 import { useStore } from '../store'
 import { SEATS, TV_SCREEN } from './layout'
 import { usePreferences } from '../preferences'
+import { makePush, tryFullscreen, wheelAmount } from '../takeover'
+import { useMediaHub, watchView } from '../media/state'
+import { openStation, useStation } from '../stations/state'
 
 // Frame the physical device at roughly half the view, preserving its surroundings.
 export function focusedFov(distance: number, aspect: number, computer: boolean) {
@@ -19,11 +22,19 @@ export function SeatedFocus() {
       const s = useStore.getState()
       return s.seated !== null && !s.arriving && !s.menuOpen && !(target as Element | null)?.closest?.('button, input, textarea, select, .room-remote, .tt-backdrop')
     }
+    const push = makePush()
     const wheel = (e: WheelEvent) => {
-      if (!available(e.target)) return
+      if (!available(e.target) || useMediaHub.getState().view !== 'room' || useMediaHub.getState().open || useStation.getState().open) return
       e.preventDefault()
-      const amount = e.deltaY * (e.deltaMode === 1 ? 16 : e.deltaMode === 2 ? 300 : 1)
+      const amount = wheelAmount(e)
       const s = useStore.getState()
+      // Already zoomed all the way in and still scrolling in → full-screen takeover of this seat's screen.
+      if (s.seatZoom >= 0.999 && push(amount, 'in')) {
+        const seat = SEATS[s.seated!]
+        if (seat.target) openStation('computer', true)
+        else { watchView('screen'); tryFullscreen(document.querySelector('.watch-theater')) }
+        return
+      }
       s.setSeatZoom(s.seatZoom - MathUtils.clamp(amount, -120, 120) * 0.0015)
     }
     const key = (e: KeyboardEvent) => {
